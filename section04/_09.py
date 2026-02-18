@@ -1,50 +1,31 @@
-# 10
-# 3 2 10 1 5 4 7 8 9 6
-
 N = int(input())
 arr = list(map(int, input().split()))
-cur = 0
-count = 0
+last = 0
 res = ""
+s = 0
+e = N-1
 
-while True:
-    if len(arr) != 1:
-        if cur < arr[0] < arr[-1]:
-            res += "L"
-            count += 1
-            cur = arr[0]
-            arr.pop(0)
+while s <= e:
+    tmp = []
+    if last < arr[s]:
+        tmp.append((arr[s], "L"))
 
-        elif arr[0] < cur < arr[-1]:
-            res += "R"
-            count += 1
-            cur = arr[-1]
-            arr.pop(-1)
+    if last < arr[e]:
+        tmp.append((arr[e], "R"))
 
-        elif cur < arr[-1] < arr[0]:
-            res += "R"
-            count += 1
-            cur = arr[-1]
-            arr.pop(-1)
-
-        elif arr[-1] < cur < arr[0]:
-            res += "L"
-            count += 1
-            cur = arr[0]
-            arr.pop(0)
-
-        else:
-            break
-
-    else:
-        if cur < arr[0]:
-            res += "L"
-            count += 1
-
+    tmp.sort()
+    if len(tmp) == 0:
         break
+    else:
+        res += tmp[0][1]
+        last = tmp[0][0]
 
-print(count)
+        if tmp[0][1] == "L":
+            s += 1
+        else:
+            e -= 1
+
+print(len(res))
 print(res)
 
-
-
+# "현재의 최적 선택(작은 값 선택)이 전체의 최적해(최장 길이)를 보장한다"는 그리디의 논리입니다.
