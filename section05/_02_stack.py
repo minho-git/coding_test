@@ -8,7 +8,7 @@ for i in range(len(s)):
         stack.append("(")
 
     elif s[i] == ")":
-        stack.pop()
+        stack.pop() # 무조건 하나 빼줘야 한다.
 
         if s[i-1] == ")":
             res += 1
