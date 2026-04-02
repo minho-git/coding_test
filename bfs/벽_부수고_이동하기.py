@@ -1,0 +1,48 @@
+from collections import deque
+
+dy = [-1, 0, 1, 0]
+dx = [0, 1, 0, -1]
+
+N, M = map(int, input().split())
+
+graph = []
+for i in range(N):
+    graph.append(list(map(int, input())))
+
+q = deque()
+q.append((0, 0, 1, 0))
+visited = [[[float("inf")] * M for _ in range(N)] for __ in range(2)]
+visited[1][0][0] = 1
+visited[0][0][0] = 1
+
+while q:
+    y, x, dist, check = q.popleft()
+
+    if y == N - 1 and x == M - 1:
+        print(dist)
+        exit()  # 프로그램 강제 종료
+
+    for i in range(4):
+        yy = y + dy[i]
+        xx = x + dx[i]
+        new_dist = dist + 1
+
+        if 0 <= yy < N and 0 <= xx < M:
+            if check == 0:
+
+                if graph[yy][xx] == 0 and visited[0][yy][xx] > new_dist:
+                    q.append((yy, xx, new_dist, 0))
+                    visited[0][yy][xx] = new_dist
+
+                elif graph[yy][xx] == 1 and visited[1][yy][xx] > new_dist:
+                    q.append((yy, xx, new_dist, 1))
+                    visited[1][yy][xx] = new_dist
+
+            else:
+                if graph[yy][xx] == 0 and visited[1][yy][xx] > new_dist:
+                    q.append((yy, xx, new_dist, 1))
+                    visited[1][yy][xx] = new_dist
+
+
+
+
